@@ -13,7 +13,6 @@ c0 {
         integer l19, l20, l21;
         l4 = false + false;
         while 171 { }
-        
         return true * 117;
         }
     }
