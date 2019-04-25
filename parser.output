@@ -1,0 +1,2988 @@
+Terminals unused in grammar
+
+   T_EXPRESSION
+   T_NEGATIVE
+   T_INTEGER
+   T_BOOLEAN
+   T_CLASSNAME
+   T_ARGUMENT
+   T_ARGUMENT_PRIME
+   T_COMMENT
+
+
+State 7 conflicts: 1 shift/reduce
+State 8 conflicts: 1 shift/reduce
+State 36 conflicts: 2 shift/reduce
+State 45 conflicts: 6 shift/reduce
+State 46 conflicts: 6 shift/reduce
+State 75 conflicts: 6 shift/reduce
+State 77 conflicts: 6 shift/reduce
+State 81 conflicts: 6 shift/reduce
+State 107 conflicts: 6 shift/reduce
+State 109 conflicts: 2 shift/reduce
+State 125 conflicts: 1 shift/reduce
+State 132 conflicts: 6 shift/reduce
+State 151 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: Start $end
+
+    1 Start: Class
+
+    2 Class: T_ID T_OPENBRACE Line T_CLOSEBRACE
+    3      | T_ID T_EXTENDS Class
+    4      | Class Class
+    5      | T_ID T_OPENBRACE T_CLOSEBRACE
+
+    6 Line: Begin_Line End_Line
+    7     | Lambda
+    8     | T_IF If_Statement
+    9     | T_WHILE While
+   10     | Line Line
+   11     | T_DO Do_While End_Line
+
+   12 If_Statement: If T_ELIF Else_If T_ELSE Else
+   13             | If T_ELSE Else
+   14             | If T_ELIF Else_If
+   15             | If
+
+   16 If: Expr T_OPENBRACE Line T_CLOSEBRACE
+   17   | Expr Line
+
+   18 Else_If: Expr T_OPENBRACE Line T_CLOSEBRACE
+   19        | Expr Line
+   20        | Else_If T_ELIF Else_If
+
+   21 Else: T_OPENBRACE Line T_CLOSEBRACE
+   22     | Line
+
+   23 Do_While: T_OPENBRACE Line T_CLOSEBRACE T_WHILE Expr
+   24         | Line T_WHILE Expr
+
+   25 While: Expr T_OPENBRACE Line T_CLOSEBRACE
+   26      | Expr Line
+
+   27 Begin_Line: T_ID T_ASSIGN Expr
+   28           | T_ID T_DOT T_ID T_ASSIGN Expr
+   29           | Definition
+   30           | T_PRINT Expr
+
+   31 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE
+   32       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line Return T_CLOSEBRACE
+   33       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE Line T_CLOSEBRACE
+   34       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE
+   35       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line Return T_CLOSEBRACE
+   36       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE Line T_CLOSEBRACE
+   37       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Return T_CLOSEBRACE
+   38       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Return T_CLOSEBRACE
+   39       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE T_CLOSEBRACE
+   40       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Return T_CLOSEBRACE
+   41       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Return T_CLOSEBRACE
+   42       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE T_CLOSEBRACE
+
+   43 Return: T_RETURN Expr T_SEMICOLON
+
+   44 End_Line: T_SEMICOLON Line
+   45         | T_SEMICOLON
+
+   46 Definition: T_TYPE ID_Series
+   47           | T_ID ID_Series
+
+   48 Expr: Expr T_PLUS Expr
+   49     | Expr T_MINUS Expr
+   50     | Expr T_MULTIPLY Expr
+   51     | Expr T_DIVIDE Expr
+   52     | Expr T_LARGERTHAN Expr
+   53     | Expr T_LARGEREQUAL Expr
+   54     | Expr T_LESSTHAN Expr
+   55     | Expr T_LESSEQUAL Expr
+   56     | Expr T_EQUALS Expr
+   57     | Expr T_AND Expr
+   58     | Expr T_OR Expr
+   59     | T_NOT Expr
+   60     | T_MINUS Expr
+   61     | T_ID
+   62     | T_ID T_DOT T_ID
+   63     | MethodCall
+   64     | T_OPENPAREN Expr T_CLOSEPAREN
+   65     | T_NUMBER
+   66     | T_TRUE
+   67     | T_FALSE
+   68     | T_NEW T_ID
+   69     | T_NEW T_ID T_OPENPAREN Arguments T_CLOSEPAREN
+   70     | T_NEW T_ID T_OPENPAREN T_NUMBER T_CLOSEPAREN
+   71     | T_NEW T_ID T_OPENPAREN T_CLOSEPAREN
+
+   72 Parameters: T_TYPE T_ID T_COMMA Parameters
+   73           | T_ID T_ID T_COMMA Parameters
+   74           | T_TYPE T_ID
+   75           | T_ID T_ID
+
+   76 ID_Series: T_ID T_COMMA ID_Series
+   77          | T_ID
+
+   78 MethodCall: T_ID T_OPENPAREN T_CLOSEPAREN
+   79           | T_ID T_OPENPAREN Arguments T_CLOSEPAREN
+   80           | T_ID T_DOT T_ID T_OPENPAREN T_CLOSEPAREN
+   81           | T_ID T_DOT T_ID T_OPENPAREN Arguments T_CLOSEPAREN
+
+   82 Arguments: Arguments_prime
+
+   83 Arguments_prime: Arguments_prime T_COMMA Expr
+   84                | Expr
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+T_EXPRESSION (258)
+T_NUMBER (259) 65 70
+T_ID (260) 2 3 5 27 28 31 32 33 34 35 36 37 38 39 40 41 42 47 61 62
+    68 69 70 71 72 73 74 75 76 77 78 79 80 81
+T_PLUS (261) 48
+T_MINUS (262) 49 60
+T_MULTIPLY (263) 50
+T_DIVIDE (264) 51
+T_LARGERTHAN (265) 52
+T_LARGEREQUAL (266) 53
+T_LESSTHAN (267) 54
+T_LESSEQUAL (268) 55
+T_NEGATIVE (269)
+T_PRINT (270) 30
+T_RETURN (271) 43
+T_IF (272) 8
+T_ELSE (273) 12 13
+T_ELIF (274) 12 14 20
+T_WHILE (275) 9 23 24
+T_NEW (276) 68 69 70 71
+T_INTEGER (277)
+T_BOOLEAN (278)
+T_NONE (279) 33 36 39 42
+T_EQUALS (280) 56
+T_TYPE (281) 31 34 37 40 46 72 74
+T_AND (282) 57
+T_OR (283) 58
+T_NOT (284) 59
+T_TRUE (285) 66
+T_FALSE (286) 67
+T_EXTENDS (287) 3
+T_DO (288) 11
+T_CLASSNAME (289)
+T_ARGUMENT (290)
+T_ARGUMENT_PRIME (291)
+T_OPENPAREN (292) 31 32 33 34 35 36 37 38 39 40 41 42 64 69 70 71 78
+    79 80 81
+T_CLOSEPAREN (293) 31 32 33 34 35 36 37 38 39 40 41 42 64 69 70 71
+    78 79 80 81
+T_OPENBRACE (294) 2 5 16 18 21 23 25 31 32 33 34 35 36 37 38 39 40
+    41 42
+T_CLOSEBRACE (295) 2 5 16 18 21 23 25 31 32 33 34 35 36 37 38 39 40
+    41 42
+T_COMMENT (296)
+T_DOT (297) 28 62 80 81
+T_COMMA (298) 72 73 76 83
+T_SEMICOLON (299) 43 44 45
+T_ARROW (300) 31 32 33 34 35 36 37 38 39 40 41 42
+T_ASSIGN (301) 27 28
+T_UNARYMINUS (302)
+
+
+Nonterminals, with rules where they appear
+
+$accept (48)
+    on left: 0
+Start (49)
+    on left: 1, on right: 0
+Class (50)
+    on left: 2 3 4 5, on right: 1 3 4
+Line (51)
+    on left: 6 7 8 9 10 11, on right: 2 10 16 17 18 19 21 22 23 24
+    25 26 31 32 33 34 35 36 44
+If_Statement (52)
+    on left: 12 13 14 15, on right: 8
+If (53)
+    on left: 16 17, on right: 12 13 14 15
+Else_If (54)
+    on left: 18 19 20, on right: 12 14 20
+Else (55)
+    on left: 21 22, on right: 12 13
+Do_While (56)
+    on left: 23 24, on right: 11
+While (57)
+    on left: 25 26, on right: 9
+Begin_Line (58)
+    on left: 27 28 29 30, on right: 6
+Lambda (59)
+    on left: 31 32 33 34 35 36 37 38 39 40 41 42, on right: 7
+Return (60)
+    on left: 43, on right: 31 32 34 35 37 38 40 41
+End_Line (61)
+    on left: 44 45, on right: 6 11
+Definition (62)
+    on left: 46 47, on right: 29
+Expr (63)
+    on left: 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65
+    66 67 68 69 70 71, on right: 16 17 18 19 23 24 25 26 27 28 30 43
+    48 49 50 51 52 53 54 55 56 57 58 59 60 64 83 84
+Parameters (64)
+    on left: 72 73 74 75, on right: 31 32 33 37 38 39 72 73
+ID_Series (65)
+    on left: 76 77, on right: 46 47 76
+MethodCall (66)
+    on left: 78 79 80 81, on right: 63
+Arguments (67)
+    on left: 82, on right: 69 79 81
+Arguments_prime (68)
+    on left: 83 84, on right: 82 83
+
+
+State 0
+
+    0 $accept: . Start $end
+
+    T_ID  shift, and go to state 1
+
+    Start  go to state 2
+    Class  go to state 3
+
+
+State 1
+
+    2 Class: T_ID . T_OPENBRACE Line T_CLOSEBRACE
+    3      | T_ID . T_EXTENDS Class
+    5      | T_ID . T_OPENBRACE T_CLOSEBRACE
+
+    T_EXTENDS    shift, and go to state 4
+    T_OPENBRACE  shift, and go to state 5
+
+
+State 2
+
+    0 $accept: Start . $end
+
+    $end  shift, and go to state 6
+
+
+State 3
+
+    1 Start: Class .
+    4 Class: Class . Class
+
+    T_ID  shift, and go to state 1
+
+    $default  reduce using rule 1 (Start)
+
+    Class  go to state 7
+
+
+State 4
+
+    3 Class: T_ID T_EXTENDS . Class
+
+    T_ID  shift, and go to state 1
+
+    Class  go to state 8
+
+
+State 5
+
+    2 Class: T_ID T_OPENBRACE . Line T_CLOSEBRACE
+    5      | T_ID T_OPENBRACE . T_CLOSEBRACE
+
+    T_ID          shift, and go to state 9
+    T_PRINT       shift, and go to state 10
+    T_IF          shift, and go to state 11
+    T_WHILE       shift, and go to state 12
+    T_TYPE        shift, and go to state 13
+    T_DO          shift, and go to state 14
+    T_CLOSEBRACE  shift, and go to state 15
+
+    Line        go to state 16
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 6
+
+    0 $accept: Start $end .
+
+    $default  accept
+
+
+State 7
+
+    4 Class: Class . Class
+    4      | Class Class .
+
+    T_ID  shift, and go to state 1
+
+    T_ID      [reduce using rule 4 (Class)]
+    $default  reduce using rule 4 (Class)
+
+    Class  go to state 7
+
+
+State 8
+
+    3 Class: T_ID T_EXTENDS Class .
+    4      | Class . Class
+
+    T_ID  shift, and go to state 1
+
+    T_ID      [reduce using rule 3 (Class)]
+    $default  reduce using rule 3 (Class)
+
+    Class  go to state 7
+
+
+State 9
+
+   27 Begin_Line: T_ID . T_ASSIGN Expr
+   28           | T_ID . T_DOT T_ID T_ASSIGN Expr
+   31 Lambda: T_ID . T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE
+   32       | T_ID . T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line Return T_CLOSEBRACE
+   33       | T_ID . T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE Line T_CLOSEBRACE
+   34       | T_ID . T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE
+   35       | T_ID . T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line Return T_CLOSEBRACE
+   36       | T_ID . T_OPENPAREN T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE Line T_CLOSEBRACE
+   37       | T_ID . T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Return T_CLOSEBRACE
+   38       | T_ID . T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Return T_CLOSEBRACE
+   39       | T_ID . T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE T_CLOSEBRACE
+   40       | T_ID . T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Return T_CLOSEBRACE
+   41       | T_ID . T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Return T_CLOSEBRACE
+   42       | T_ID . T_OPENPAREN T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE T_CLOSEBRACE
+   47 Definition: T_ID . ID_Series
+
+    T_ID         shift, and go to state 20
+    T_OPENPAREN  shift, and go to state 21
+    T_DOT        shift, and go to state 22
+    T_ASSIGN     shift, and go to state 23
+
+    ID_Series  go to state 24
+
+
+State 10
+
+   30 Begin_Line: T_PRINT . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 33
+    MethodCall  go to state 34
+
+
+State 11
+
+    8 Line: T_IF . If_Statement
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    If_Statement  go to state 35
+    If            go to state 36
+    Expr          go to state 37
+    MethodCall    go to state 34
+
+
+State 12
+
+    9 Line: T_WHILE . While
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    While       go to state 38
+    Expr        go to state 39
+    MethodCall  go to state 34
+
+
+State 13
+
+   46 Definition: T_TYPE . ID_Series
+
+    T_ID  shift, and go to state 20
+
+    ID_Series  go to state 40
+
+
+State 14
+
+   11 Line: T_DO . Do_While End_Line
+
+    T_ID         shift, and go to state 9
+    T_PRINT      shift, and go to state 10
+    T_IF         shift, and go to state 11
+    T_WHILE      shift, and go to state 12
+    T_TYPE       shift, and go to state 13
+    T_DO         shift, and go to state 14
+    T_OPENBRACE  shift, and go to state 41
+
+    Line        go to state 42
+    Do_While    go to state 43
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 15
+
+    5 Class: T_ID T_OPENBRACE T_CLOSEBRACE .
+
+    $default  reduce using rule 5 (Class)
+
+
+State 16
+
+    2 Class: T_ID T_OPENBRACE Line . T_CLOSEBRACE
+   10 Line: Line . Line
+
+    T_ID          shift, and go to state 9
+    T_PRINT       shift, and go to state 10
+    T_IF          shift, and go to state 11
+    T_WHILE       shift, and go to state 12
+    T_TYPE        shift, and go to state 13
+    T_DO          shift, and go to state 14
+    T_CLOSEBRACE  shift, and go to state 44
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 17
+
+    6 Line: Begin_Line . End_Line
+
+    T_SEMICOLON  shift, and go to state 46
+
+    End_Line  go to state 47
+
+
+State 18
+
+    7 Line: Lambda .
+
+    $default  reduce using rule 7 (Line)
+
+
+State 19
+
+   29 Begin_Line: Definition .
+
+    $default  reduce using rule 29 (Begin_Line)
+
+
+State 20
+
+   76 ID_Series: T_ID . T_COMMA ID_Series
+   77          | T_ID .
+
+    T_COMMA  shift, and go to state 48
+
+    $default  reduce using rule 77 (ID_Series)
+
+
+State 21
+
+   31 Lambda: T_ID T_OPENPAREN . Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE
+   32       | T_ID T_OPENPAREN . Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line Return T_CLOSEBRACE
+   33       | T_ID T_OPENPAREN . Parameters T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE Line T_CLOSEBRACE
+   34       | T_ID T_OPENPAREN . T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE
+   35       | T_ID T_OPENPAREN . T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line Return T_CLOSEBRACE
+   36       | T_ID T_OPENPAREN . T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE Line T_CLOSEBRACE
+   37       | T_ID T_OPENPAREN . Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Return T_CLOSEBRACE
+   38       | T_ID T_OPENPAREN . Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Return T_CLOSEBRACE
+   39       | T_ID T_OPENPAREN . Parameters T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE T_CLOSEBRACE
+   40       | T_ID T_OPENPAREN . T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Return T_CLOSEBRACE
+   41       | T_ID T_OPENPAREN . T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Return T_CLOSEBRACE
+   42       | T_ID T_OPENPAREN . T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE T_CLOSEBRACE
+
+    T_ID          shift, and go to state 49
+    T_TYPE        shift, and go to state 50
+    T_CLOSEPAREN  shift, and go to state 51
+
+    Parameters  go to state 52
+
+
+State 22
+
+   28 Begin_Line: T_ID T_DOT . T_ID T_ASSIGN Expr
+
+    T_ID  shift, and go to state 53
+
+
+State 23
+
+   27 Begin_Line: T_ID T_ASSIGN . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 54
+    MethodCall  go to state 34
+
+
+State 24
+
+   47 Definition: T_ID ID_Series .
+
+    $default  reduce using rule 47 (Definition)
+
+
+State 25
+
+   65 Expr: T_NUMBER .
+
+    $default  reduce using rule 65 (Expr)
+
+
+State 26
+
+   61 Expr: T_ID .
+   62     | T_ID . T_DOT T_ID
+   78 MethodCall: T_ID . T_OPENPAREN T_CLOSEPAREN
+   79           | T_ID . T_OPENPAREN Arguments T_CLOSEPAREN
+   80           | T_ID . T_DOT T_ID T_OPENPAREN T_CLOSEPAREN
+   81           | T_ID . T_DOT T_ID T_OPENPAREN Arguments T_CLOSEPAREN
+
+    T_OPENPAREN  shift, and go to state 55
+    T_DOT        shift, and go to state 56
+
+    $default  reduce using rule 61 (Expr)
+
+
+State 27
+
+   60 Expr: T_MINUS . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 57
+    MethodCall  go to state 34
+
+
+State 28
+
+   68 Expr: T_NEW . T_ID
+   69     | T_NEW . T_ID T_OPENPAREN Arguments T_CLOSEPAREN
+   70     | T_NEW . T_ID T_OPENPAREN T_NUMBER T_CLOSEPAREN
+   71     | T_NEW . T_ID T_OPENPAREN T_CLOSEPAREN
+
+    T_ID  shift, and go to state 58
+
+
+State 29
+
+   59 Expr: T_NOT . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 59
+    MethodCall  go to state 34
+
+
+State 30
+
+   66 Expr: T_TRUE .
+
+    $default  reduce using rule 66 (Expr)
+
+
+State 31
+
+   67 Expr: T_FALSE .
+
+    $default  reduce using rule 67 (Expr)
+
+
+State 32
+
+   64 Expr: T_OPENPAREN . Expr T_CLOSEPAREN
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 60
+    MethodCall  go to state 34
+
+
+State 33
+
+   30 Begin_Line: T_PRINT Expr .
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_EQUALS       shift, and go to state 69
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+
+    $default  reduce using rule 30 (Begin_Line)
+
+
+State 34
+
+   63 Expr: MethodCall .
+
+    $default  reduce using rule 63 (Expr)
+
+
+State 35
+
+    8 Line: T_IF If_Statement .
+
+    $default  reduce using rule 8 (Line)
+
+
+State 36
+
+   12 If_Statement: If . T_ELIF Else_If T_ELSE Else
+   13             | If . T_ELSE Else
+   14             | If . T_ELIF Else_If
+   15             | If .
+
+    T_ELSE  shift, and go to state 72
+    T_ELIF  shift, and go to state 73
+
+    T_ELSE    [reduce using rule 15 (If_Statement)]
+    T_ELIF    [reduce using rule 15 (If_Statement)]
+    $default  reduce using rule 15 (If_Statement)
+
+
+State 37
+
+   16 If: Expr . T_OPENBRACE Line T_CLOSEBRACE
+   17   | Expr . Line
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_ID           shift, and go to state 9
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_PRINT        shift, and go to state 10
+    T_IF           shift, and go to state 11
+    T_WHILE        shift, and go to state 12
+    T_EQUALS       shift, and go to state 69
+    T_TYPE         shift, and go to state 13
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+    T_DO           shift, and go to state 14
+    T_OPENBRACE    shift, and go to state 74
+
+    Line        go to state 75
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 38
+
+    9 Line: T_WHILE While .
+
+    $default  reduce using rule 9 (Line)
+
+
+State 39
+
+   25 While: Expr . T_OPENBRACE Line T_CLOSEBRACE
+   26      | Expr . Line
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_ID           shift, and go to state 9
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_PRINT        shift, and go to state 10
+    T_IF           shift, and go to state 11
+    T_WHILE        shift, and go to state 12
+    T_EQUALS       shift, and go to state 69
+    T_TYPE         shift, and go to state 13
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+    T_DO           shift, and go to state 14
+    T_OPENBRACE    shift, and go to state 76
+
+    Line        go to state 77
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 40
+
+   46 Definition: T_TYPE ID_Series .
+
+    $default  reduce using rule 46 (Definition)
+
+
+State 41
+
+   23 Do_While: T_OPENBRACE . Line T_CLOSEBRACE T_WHILE Expr
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    Line        go to state 78
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 42
+
+   10 Line: Line . Line
+   24 Do_While: Line . T_WHILE Expr
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 79
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 43
+
+   11 Line: T_DO Do_While . End_Line
+
+    T_SEMICOLON  shift, and go to state 46
+
+    End_Line  go to state 80
+
+
+State 44
+
+    2 Class: T_ID T_OPENBRACE Line T_CLOSEBRACE .
+
+    $default  reduce using rule 2 (Class)
+
+
+State 45
+
+   10 Line: Line . Line
+   10     | Line Line .
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    T_ID      [reduce using rule 10 (Line)]
+    T_PRINT   [reduce using rule 10 (Line)]
+    T_IF      [reduce using rule 10 (Line)]
+    T_WHILE   [reduce using rule 10 (Line)]
+    T_TYPE    [reduce using rule 10 (Line)]
+    T_DO      [reduce using rule 10 (Line)]
+    $default  reduce using rule 10 (Line)
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 46
+
+   44 End_Line: T_SEMICOLON . Line
+   45         | T_SEMICOLON .
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    T_ID      [reduce using rule 45 (End_Line)]
+    T_PRINT   [reduce using rule 45 (End_Line)]
+    T_IF      [reduce using rule 45 (End_Line)]
+    T_WHILE   [reduce using rule 45 (End_Line)]
+    T_TYPE    [reduce using rule 45 (End_Line)]
+    T_DO      [reduce using rule 45 (End_Line)]
+    $default  reduce using rule 45 (End_Line)
+
+    Line        go to state 81
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 47
+
+    6 Line: Begin_Line End_Line .
+
+    $default  reduce using rule 6 (Line)
+
+
+State 48
+
+   76 ID_Series: T_ID T_COMMA . ID_Series
+
+    T_ID  shift, and go to state 20
+
+    ID_Series  go to state 82
+
+
+State 49
+
+   73 Parameters: T_ID . T_ID T_COMMA Parameters
+   75           | T_ID . T_ID
+
+    T_ID  shift, and go to state 83
+
+
+State 50
+
+   72 Parameters: T_TYPE . T_ID T_COMMA Parameters
+   74           | T_TYPE . T_ID
+
+    T_ID  shift, and go to state 84
+
+
+State 51
+
+   34 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN . T_ARROW T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE
+   35       | T_ID T_OPENPAREN T_CLOSEPAREN . T_ARROW T_ID T_OPENBRACE Line Return T_CLOSEBRACE
+   36       | T_ID T_OPENPAREN T_CLOSEPAREN . T_ARROW T_NONE T_OPENBRACE Line T_CLOSEBRACE
+   40       | T_ID T_OPENPAREN T_CLOSEPAREN . T_ARROW T_TYPE T_OPENBRACE Return T_CLOSEBRACE
+   41       | T_ID T_OPENPAREN T_CLOSEPAREN . T_ARROW T_ID T_OPENBRACE Return T_CLOSEBRACE
+   42       | T_ID T_OPENPAREN T_CLOSEPAREN . T_ARROW T_NONE T_OPENBRACE T_CLOSEBRACE
+
+    T_ARROW  shift, and go to state 85
+
+
+State 52
+
+   31 Lambda: T_ID T_OPENPAREN Parameters . T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE
+   32       | T_ID T_OPENPAREN Parameters . T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line Return T_CLOSEBRACE
+   33       | T_ID T_OPENPAREN Parameters . T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE Line T_CLOSEBRACE
+   37       | T_ID T_OPENPAREN Parameters . T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Return T_CLOSEBRACE
+   38       | T_ID T_OPENPAREN Parameters . T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Return T_CLOSEBRACE
+   39       | T_ID T_OPENPAREN Parameters . T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE T_CLOSEBRACE
+
+    T_CLOSEPAREN  shift, and go to state 86
+
+
+State 53
+
+   28 Begin_Line: T_ID T_DOT T_ID . T_ASSIGN Expr
+
+    T_ASSIGN  shift, and go to state 87
+
+
+State 54
+
+   27 Begin_Line: T_ID T_ASSIGN Expr .
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_EQUALS       shift, and go to state 69
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+
+    $default  reduce using rule 27 (Begin_Line)
+
+
+State 55
+
+   78 MethodCall: T_ID T_OPENPAREN . T_CLOSEPAREN
+   79           | T_ID T_OPENPAREN . Arguments T_CLOSEPAREN
+
+    T_NUMBER      shift, and go to state 25
+    T_ID          shift, and go to state 26
+    T_MINUS       shift, and go to state 27
+    T_NEW         shift, and go to state 28
+    T_NOT         shift, and go to state 29
+    T_TRUE        shift, and go to state 30
+    T_FALSE       shift, and go to state 31
+    T_OPENPAREN   shift, and go to state 32
+    T_CLOSEPAREN  shift, and go to state 88
+
+    Expr             go to state 89
+    MethodCall       go to state 34
+    Arguments        go to state 90
+    Arguments_prime  go to state 91
+
+
+State 56
+
+   62 Expr: T_ID T_DOT . T_ID
+   80 MethodCall: T_ID T_DOT . T_ID T_OPENPAREN T_CLOSEPAREN
+   81           | T_ID T_DOT . T_ID T_OPENPAREN Arguments T_CLOSEPAREN
+
+    T_ID  shift, and go to state 92
+
+
+State 57
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+   60     | T_MINUS Expr .
+
+    $default  reduce using rule 60 (Expr)
+
+
+State 58
+
+   68 Expr: T_NEW T_ID .
+   69     | T_NEW T_ID . T_OPENPAREN Arguments T_CLOSEPAREN
+   70     | T_NEW T_ID . T_OPENPAREN T_NUMBER T_CLOSEPAREN
+   71     | T_NEW T_ID . T_OPENPAREN T_CLOSEPAREN
+
+    T_OPENPAREN  shift, and go to state 93
+
+    $default  reduce using rule 68 (Expr)
+
+
+State 59
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+   59     | T_NOT Expr .
+
+    $default  reduce using rule 59 (Expr)
+
+
+State 60
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+   64     | T_OPENPAREN Expr . T_CLOSEPAREN
+
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_EQUALS       shift, and go to state 69
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+    T_CLOSEPAREN   shift, and go to state 94
+
+
+State 61
+
+   48 Expr: Expr T_PLUS . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 95
+    MethodCall  go to state 34
+
+
+State 62
+
+   49 Expr: Expr T_MINUS . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 96
+    MethodCall  go to state 34
+
+
+State 63
+
+   50 Expr: Expr T_MULTIPLY . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 97
+    MethodCall  go to state 34
+
+
+State 64
+
+   51 Expr: Expr T_DIVIDE . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 98
+    MethodCall  go to state 34
+
+
+State 65
+
+   52 Expr: Expr T_LARGERTHAN . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 99
+    MethodCall  go to state 34
+
+
+State 66
+
+   53 Expr: Expr T_LARGEREQUAL . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 100
+    MethodCall  go to state 34
+
+
+State 67
+
+   54 Expr: Expr T_LESSTHAN . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 101
+    MethodCall  go to state 34
+
+
+State 68
+
+   55 Expr: Expr T_LESSEQUAL . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 102
+    MethodCall  go to state 34
+
+
+State 69
+
+   56 Expr: Expr T_EQUALS . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 103
+    MethodCall  go to state 34
+
+
+State 70
+
+   57 Expr: Expr T_AND . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 104
+    MethodCall  go to state 34
+
+
+State 71
+
+   58 Expr: Expr T_OR . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 105
+    MethodCall  go to state 34
+
+
+State 72
+
+   13 If_Statement: If T_ELSE . Else
+
+    T_ID         shift, and go to state 9
+    T_PRINT      shift, and go to state 10
+    T_IF         shift, and go to state 11
+    T_WHILE      shift, and go to state 12
+    T_TYPE       shift, and go to state 13
+    T_DO         shift, and go to state 14
+    T_OPENBRACE  shift, and go to state 106
+
+    Line        go to state 107
+    Else        go to state 108
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 73
+
+   12 If_Statement: If T_ELIF . Else_If T_ELSE Else
+   14             | If T_ELIF . Else_If
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Else_If     go to state 109
+    Expr        go to state 110
+    MethodCall  go to state 34
+
+
+State 74
+
+   16 If: Expr T_OPENBRACE . Line T_CLOSEBRACE
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    Line        go to state 111
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 75
+
+   10 Line: Line . Line
+   17 If: Expr Line .
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    T_ID      [reduce using rule 17 (If)]
+    T_PRINT   [reduce using rule 17 (If)]
+    T_IF      [reduce using rule 17 (If)]
+    T_WHILE   [reduce using rule 17 (If)]
+    T_TYPE    [reduce using rule 17 (If)]
+    T_DO      [reduce using rule 17 (If)]
+    $default  reduce using rule 17 (If)
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 76
+
+   25 While: Expr T_OPENBRACE . Line T_CLOSEBRACE
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    Line        go to state 112
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 77
+
+   10 Line: Line . Line
+   26 While: Expr Line .
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    T_ID      [reduce using rule 26 (While)]
+    T_PRINT   [reduce using rule 26 (While)]
+    T_IF      [reduce using rule 26 (While)]
+    T_WHILE   [reduce using rule 26 (While)]
+    T_TYPE    [reduce using rule 26 (While)]
+    T_DO      [reduce using rule 26 (While)]
+    $default  reduce using rule 26 (While)
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 78
+
+   10 Line: Line . Line
+   23 Do_While: T_OPENBRACE Line . T_CLOSEBRACE T_WHILE Expr
+
+    T_ID          shift, and go to state 9
+    T_PRINT       shift, and go to state 10
+    T_IF          shift, and go to state 11
+    T_WHILE       shift, and go to state 12
+    T_TYPE        shift, and go to state 13
+    T_DO          shift, and go to state 14
+    T_CLOSEBRACE  shift, and go to state 113
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 79
+
+    9 Line: T_WHILE . While
+   24 Do_While: Line T_WHILE . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    While       go to state 38
+    Expr        go to state 114
+    MethodCall  go to state 34
+
+
+State 80
+
+   11 Line: T_DO Do_While End_Line .
+
+    $default  reduce using rule 11 (Line)
+
+
+State 81
+
+   10 Line: Line . Line
+   44 End_Line: T_SEMICOLON Line .
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    T_ID      [reduce using rule 44 (End_Line)]
+    T_PRINT   [reduce using rule 44 (End_Line)]
+    T_IF      [reduce using rule 44 (End_Line)]
+    T_WHILE   [reduce using rule 44 (End_Line)]
+    T_TYPE    [reduce using rule 44 (End_Line)]
+    T_DO      [reduce using rule 44 (End_Line)]
+    $default  reduce using rule 44 (End_Line)
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 82
+
+   76 ID_Series: T_ID T_COMMA ID_Series .
+
+    $default  reduce using rule 76 (ID_Series)
+
+
+State 83
+
+   73 Parameters: T_ID T_ID . T_COMMA Parameters
+   75           | T_ID T_ID .
+
+    T_COMMA  shift, and go to state 115
+
+    $default  reduce using rule 75 (Parameters)
+
+
+State 84
+
+   72 Parameters: T_TYPE T_ID . T_COMMA Parameters
+   74           | T_TYPE T_ID .
+
+    T_COMMA  shift, and go to state 116
+
+    $default  reduce using rule 74 (Parameters)
+
+
+State 85
+
+   34 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW . T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE
+   35       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW . T_ID T_OPENBRACE Line Return T_CLOSEBRACE
+   36       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW . T_NONE T_OPENBRACE Line T_CLOSEBRACE
+   40       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW . T_TYPE T_OPENBRACE Return T_CLOSEBRACE
+   41       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW . T_ID T_OPENBRACE Return T_CLOSEBRACE
+   42       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW . T_NONE T_OPENBRACE T_CLOSEBRACE
+
+    T_ID    shift, and go to state 117
+    T_NONE  shift, and go to state 118
+    T_TYPE  shift, and go to state 119
+
+
+State 86
+
+   31 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN . T_ARROW T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE
+   32       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN . T_ARROW T_ID T_OPENBRACE Line Return T_CLOSEBRACE
+   33       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN . T_ARROW T_NONE T_OPENBRACE Line T_CLOSEBRACE
+   37       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN . T_ARROW T_TYPE T_OPENBRACE Return T_CLOSEBRACE
+   38       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN . T_ARROW T_ID T_OPENBRACE Return T_CLOSEBRACE
+   39       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN . T_ARROW T_NONE T_OPENBRACE T_CLOSEBRACE
+
+    T_ARROW  shift, and go to state 120
+
+
+State 87
+
+   28 Begin_Line: T_ID T_DOT T_ID T_ASSIGN . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 121
+    MethodCall  go to state 34
+
+
+State 88
+
+   78 MethodCall: T_ID T_OPENPAREN T_CLOSEPAREN .
+
+    $default  reduce using rule 78 (MethodCall)
+
+
+State 89
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+   84 Arguments_prime: Expr .
+
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_EQUALS       shift, and go to state 69
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+
+    $default  reduce using rule 84 (Arguments_prime)
+
+
+State 90
+
+   79 MethodCall: T_ID T_OPENPAREN Arguments . T_CLOSEPAREN
+
+    T_CLOSEPAREN  shift, and go to state 122
+
+
+State 91
+
+   82 Arguments: Arguments_prime .
+   83 Arguments_prime: Arguments_prime . T_COMMA Expr
+
+    T_COMMA  shift, and go to state 123
+
+    $default  reduce using rule 82 (Arguments)
+
+
+State 92
+
+   62 Expr: T_ID T_DOT T_ID .
+   80 MethodCall: T_ID T_DOT T_ID . T_OPENPAREN T_CLOSEPAREN
+   81           | T_ID T_DOT T_ID . T_OPENPAREN Arguments T_CLOSEPAREN
+
+    T_OPENPAREN  shift, and go to state 124
+
+    $default  reduce using rule 62 (Expr)
+
+
+State 93
+
+   69 Expr: T_NEW T_ID T_OPENPAREN . Arguments T_CLOSEPAREN
+   70     | T_NEW T_ID T_OPENPAREN . T_NUMBER T_CLOSEPAREN
+   71     | T_NEW T_ID T_OPENPAREN . T_CLOSEPAREN
+
+    T_NUMBER      shift, and go to state 125
+    T_ID          shift, and go to state 26
+    T_MINUS       shift, and go to state 27
+    T_NEW         shift, and go to state 28
+    T_NOT         shift, and go to state 29
+    T_TRUE        shift, and go to state 30
+    T_FALSE       shift, and go to state 31
+    T_OPENPAREN   shift, and go to state 32
+    T_CLOSEPAREN  shift, and go to state 126
+
+    Expr             go to state 89
+    MethodCall       go to state 34
+    Arguments        go to state 127
+    Arguments_prime  go to state 91
+
+
+State 94
+
+   64 Expr: T_OPENPAREN Expr T_CLOSEPAREN .
+
+    $default  reduce using rule 64 (Expr)
+
+
+State 95
+
+   48 Expr: Expr . T_PLUS Expr
+   48     | Expr T_PLUS Expr .
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    $default  reduce using rule 48 (Expr)
+
+
+State 96
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   49     | Expr T_MINUS Expr .
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    $default  reduce using rule 49 (Expr)
+
+
+State 97
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   50     | Expr T_MULTIPLY Expr .
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    $default  reduce using rule 50 (Expr)
+
+
+State 98
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   51     | Expr T_DIVIDE Expr .
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    $default  reduce using rule 51 (Expr)
+
+
+State 99
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   52     | Expr T_LARGERTHAN Expr .
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_PLUS      shift, and go to state 61
+    T_MINUS     shift, and go to state 62
+    T_MULTIPLY  shift, and go to state 63
+    T_DIVIDE    shift, and go to state 64
+
+    $default  reduce using rule 52 (Expr)
+
+
+State 100
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   53     | Expr T_LARGEREQUAL Expr .
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_PLUS      shift, and go to state 61
+    T_MINUS     shift, and go to state 62
+    T_MULTIPLY  shift, and go to state 63
+    T_DIVIDE    shift, and go to state 64
+
+    $default  reduce using rule 53 (Expr)
+
+
+State 101
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   54     | Expr T_LESSTHAN Expr .
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_PLUS      shift, and go to state 61
+    T_MINUS     shift, and go to state 62
+    T_MULTIPLY  shift, and go to state 63
+    T_DIVIDE    shift, and go to state 64
+
+    $default  reduce using rule 54 (Expr)
+
+
+State 102
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   55     | Expr T_LESSEQUAL Expr .
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_PLUS      shift, and go to state 61
+    T_MINUS     shift, and go to state 62
+    T_MULTIPLY  shift, and go to state 63
+    T_DIVIDE    shift, and go to state 64
+
+    $default  reduce using rule 55 (Expr)
+
+
+State 103
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   56     | Expr T_EQUALS Expr .
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_PLUS      shift, and go to state 61
+    T_MINUS     shift, and go to state 62
+    T_MULTIPLY  shift, and go to state 63
+    T_DIVIDE    shift, and go to state 64
+
+    $default  reduce using rule 56 (Expr)
+
+
+State 104
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   57     | Expr T_AND Expr .
+   58     | Expr . T_OR Expr
+
+    T_PLUS      shift, and go to state 61
+    T_MINUS     shift, and go to state 62
+    T_MULTIPLY  shift, and go to state 63
+    T_DIVIDE    shift, and go to state 64
+
+    $default  reduce using rule 57 (Expr)
+
+
+State 105
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+   58     | Expr T_OR Expr .
+
+    T_PLUS      shift, and go to state 61
+    T_MINUS     shift, and go to state 62
+    T_MULTIPLY  shift, and go to state 63
+    T_DIVIDE    shift, and go to state 64
+
+    $default  reduce using rule 58 (Expr)
+
+
+State 106
+
+   21 Else: T_OPENBRACE . Line T_CLOSEBRACE
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    Line        go to state 128
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 107
+
+   10 Line: Line . Line
+   22 Else: Line .
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    T_ID      [reduce using rule 22 (Else)]
+    T_PRINT   [reduce using rule 22 (Else)]
+    T_IF      [reduce using rule 22 (Else)]
+    T_WHILE   [reduce using rule 22 (Else)]
+    T_TYPE    [reduce using rule 22 (Else)]
+    T_DO      [reduce using rule 22 (Else)]
+    $default  reduce using rule 22 (Else)
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 108
+
+   13 If_Statement: If T_ELSE Else .
+
+    $default  reduce using rule 13 (If_Statement)
+
+
+State 109
+
+   12 If_Statement: If T_ELIF Else_If . T_ELSE Else
+   14             | If T_ELIF Else_If .
+   20 Else_If: Else_If . T_ELIF Else_If
+
+    T_ELSE  shift, and go to state 129
+    T_ELIF  shift, and go to state 130
+
+    T_ELSE    [reduce using rule 14 (If_Statement)]
+    T_ELIF    [reduce using rule 14 (If_Statement)]
+    $default  reduce using rule 14 (If_Statement)
+
+
+State 110
+
+   18 Else_If: Expr . T_OPENBRACE Line T_CLOSEBRACE
+   19        | Expr . Line
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_ID           shift, and go to state 9
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_PRINT        shift, and go to state 10
+    T_IF           shift, and go to state 11
+    T_WHILE        shift, and go to state 12
+    T_EQUALS       shift, and go to state 69
+    T_TYPE         shift, and go to state 13
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+    T_DO           shift, and go to state 14
+    T_OPENBRACE    shift, and go to state 131
+
+    Line        go to state 132
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 111
+
+   10 Line: Line . Line
+   16 If: Expr T_OPENBRACE Line . T_CLOSEBRACE
+
+    T_ID          shift, and go to state 9
+    T_PRINT       shift, and go to state 10
+    T_IF          shift, and go to state 11
+    T_WHILE       shift, and go to state 12
+    T_TYPE        shift, and go to state 13
+    T_DO          shift, and go to state 14
+    T_CLOSEBRACE  shift, and go to state 133
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 112
+
+   10 Line: Line . Line
+   25 While: Expr T_OPENBRACE Line . T_CLOSEBRACE
+
+    T_ID          shift, and go to state 9
+    T_PRINT       shift, and go to state 10
+    T_IF          shift, and go to state 11
+    T_WHILE       shift, and go to state 12
+    T_TYPE        shift, and go to state 13
+    T_DO          shift, and go to state 14
+    T_CLOSEBRACE  shift, and go to state 134
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 113
+
+   23 Do_While: T_OPENBRACE Line T_CLOSEBRACE . T_WHILE Expr
+
+    T_WHILE  shift, and go to state 135
+
+
+State 114
+
+   24 Do_While: Line T_WHILE Expr .
+   25 While: Expr . T_OPENBRACE Line T_CLOSEBRACE
+   26      | Expr . Line
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_ID           shift, and go to state 9
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_PRINT        shift, and go to state 10
+    T_IF           shift, and go to state 11
+    T_WHILE        shift, and go to state 12
+    T_EQUALS       shift, and go to state 69
+    T_TYPE         shift, and go to state 13
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+    T_DO           shift, and go to state 14
+    T_OPENBRACE    shift, and go to state 76
+
+    $default  reduce using rule 24 (Do_While)
+
+    Line        go to state 77
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 115
+
+   73 Parameters: T_ID T_ID T_COMMA . Parameters
+
+    T_ID    shift, and go to state 49
+    T_TYPE  shift, and go to state 50
+
+    Parameters  go to state 136
+
+
+State 116
+
+   72 Parameters: T_TYPE T_ID T_COMMA . Parameters
+
+    T_ID    shift, and go to state 49
+    T_TYPE  shift, and go to state 50
+
+    Parameters  go to state 137
+
+
+State 117
+
+   35 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID . T_OPENBRACE Line Return T_CLOSEBRACE
+   41       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID . T_OPENBRACE Return T_CLOSEBRACE
+
+    T_OPENBRACE  shift, and go to state 138
+
+
+State 118
+
+   36 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_NONE . T_OPENBRACE Line T_CLOSEBRACE
+   42       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_NONE . T_OPENBRACE T_CLOSEBRACE
+
+    T_OPENBRACE  shift, and go to state 139
+
+
+State 119
+
+   34 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE . T_OPENBRACE Line Return T_CLOSEBRACE
+   40       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE . T_OPENBRACE Return T_CLOSEBRACE
+
+    T_OPENBRACE  shift, and go to state 140
+
+
+State 120
+
+   31 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW . T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE
+   32       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW . T_ID T_OPENBRACE Line Return T_CLOSEBRACE
+   33       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW . T_NONE T_OPENBRACE Line T_CLOSEBRACE
+   37       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW . T_TYPE T_OPENBRACE Return T_CLOSEBRACE
+   38       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW . T_ID T_OPENBRACE Return T_CLOSEBRACE
+   39       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW . T_NONE T_OPENBRACE T_CLOSEBRACE
+
+    T_ID    shift, and go to state 141
+    T_NONE  shift, and go to state 142
+    T_TYPE  shift, and go to state 143
+
+
+State 121
+
+   28 Begin_Line: T_ID T_DOT T_ID T_ASSIGN Expr .
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_EQUALS       shift, and go to state 69
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+
+    $default  reduce using rule 28 (Begin_Line)
+
+
+State 122
+
+   79 MethodCall: T_ID T_OPENPAREN Arguments T_CLOSEPAREN .
+
+    $default  reduce using rule 79 (MethodCall)
+
+
+State 123
+
+   83 Arguments_prime: Arguments_prime T_COMMA . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 144
+    MethodCall  go to state 34
+
+
+State 124
+
+   80 MethodCall: T_ID T_DOT T_ID T_OPENPAREN . T_CLOSEPAREN
+   81           | T_ID T_DOT T_ID T_OPENPAREN . Arguments T_CLOSEPAREN
+
+    T_NUMBER      shift, and go to state 25
+    T_ID          shift, and go to state 26
+    T_MINUS       shift, and go to state 27
+    T_NEW         shift, and go to state 28
+    T_NOT         shift, and go to state 29
+    T_TRUE        shift, and go to state 30
+    T_FALSE       shift, and go to state 31
+    T_OPENPAREN   shift, and go to state 32
+    T_CLOSEPAREN  shift, and go to state 145
+
+    Expr             go to state 89
+    MethodCall       go to state 34
+    Arguments        go to state 146
+    Arguments_prime  go to state 91
+
+
+State 125
+
+   65 Expr: T_NUMBER .
+   70     | T_NEW T_ID T_OPENPAREN T_NUMBER . T_CLOSEPAREN
+
+    T_CLOSEPAREN  shift, and go to state 147
+
+    T_CLOSEPAREN  [reduce using rule 65 (Expr)]
+    $default      reduce using rule 65 (Expr)
+
+
+State 126
+
+   71 Expr: T_NEW T_ID T_OPENPAREN T_CLOSEPAREN .
+
+    $default  reduce using rule 71 (Expr)
+
+
+State 127
+
+   69 Expr: T_NEW T_ID T_OPENPAREN Arguments . T_CLOSEPAREN
+
+    T_CLOSEPAREN  shift, and go to state 148
+
+
+State 128
+
+   10 Line: Line . Line
+   21 Else: T_OPENBRACE Line . T_CLOSEBRACE
+
+    T_ID          shift, and go to state 9
+    T_PRINT       shift, and go to state 10
+    T_IF          shift, and go to state 11
+    T_WHILE       shift, and go to state 12
+    T_TYPE        shift, and go to state 13
+    T_DO          shift, and go to state 14
+    T_CLOSEBRACE  shift, and go to state 149
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 129
+
+   12 If_Statement: If T_ELIF Else_If T_ELSE . Else
+
+    T_ID         shift, and go to state 9
+    T_PRINT      shift, and go to state 10
+    T_IF         shift, and go to state 11
+    T_WHILE      shift, and go to state 12
+    T_TYPE       shift, and go to state 13
+    T_DO         shift, and go to state 14
+    T_OPENBRACE  shift, and go to state 106
+
+    Line        go to state 107
+    Else        go to state 150
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 130
+
+   20 Else_If: Else_If T_ELIF . Else_If
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Else_If     go to state 151
+    Expr        go to state 110
+    MethodCall  go to state 34
+
+
+State 131
+
+   18 Else_If: Expr T_OPENBRACE . Line T_CLOSEBRACE
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    Line        go to state 152
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 132
+
+   10 Line: Line . Line
+   19 Else_If: Expr Line .
+
+    T_ID     shift, and go to state 9
+    T_PRINT  shift, and go to state 10
+    T_IF     shift, and go to state 11
+    T_WHILE  shift, and go to state 12
+    T_TYPE   shift, and go to state 13
+    T_DO     shift, and go to state 14
+
+    T_ID      [reduce using rule 19 (Else_If)]
+    T_PRINT   [reduce using rule 19 (Else_If)]
+    T_IF      [reduce using rule 19 (Else_If)]
+    T_WHILE   [reduce using rule 19 (Else_If)]
+    T_TYPE    [reduce using rule 19 (Else_If)]
+    T_DO      [reduce using rule 19 (Else_If)]
+    $default  reduce using rule 19 (Else_If)
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 133
+
+   16 If: Expr T_OPENBRACE Line T_CLOSEBRACE .
+
+    $default  reduce using rule 16 (If)
+
+
+State 134
+
+   25 While: Expr T_OPENBRACE Line T_CLOSEBRACE .
+
+    $default  reduce using rule 25 (While)
+
+
+State 135
+
+   23 Do_While: T_OPENBRACE Line T_CLOSEBRACE T_WHILE . Expr
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 153
+    MethodCall  go to state 34
+
+
+State 136
+
+   73 Parameters: T_ID T_ID T_COMMA Parameters .
+
+    $default  reduce using rule 73 (Parameters)
+
+
+State 137
+
+   72 Parameters: T_TYPE T_ID T_COMMA Parameters .
+
+    $default  reduce using rule 72 (Parameters)
+
+
+State 138
+
+   35 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE . Line Return T_CLOSEBRACE
+   41       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE . Return T_CLOSEBRACE
+
+    T_ID      shift, and go to state 9
+    T_PRINT   shift, and go to state 10
+    T_RETURN  shift, and go to state 154
+    T_IF      shift, and go to state 11
+    T_WHILE   shift, and go to state 12
+    T_TYPE    shift, and go to state 13
+    T_DO      shift, and go to state 14
+
+    Line        go to state 155
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Return      go to state 156
+    Definition  go to state 19
+
+
+State 139
+
+   36 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE . Line T_CLOSEBRACE
+   42       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE . T_CLOSEBRACE
+
+    T_ID          shift, and go to state 9
+    T_PRINT       shift, and go to state 10
+    T_IF          shift, and go to state 11
+    T_WHILE       shift, and go to state 12
+    T_TYPE        shift, and go to state 13
+    T_DO          shift, and go to state 14
+    T_CLOSEBRACE  shift, and go to state 157
+
+    Line        go to state 158
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 140
+
+   34 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE . Line Return T_CLOSEBRACE
+   40       | T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE . Return T_CLOSEBRACE
+
+    T_ID      shift, and go to state 9
+    T_PRINT   shift, and go to state 10
+    T_RETURN  shift, and go to state 154
+    T_IF      shift, and go to state 11
+    T_WHILE   shift, and go to state 12
+    T_TYPE    shift, and go to state 13
+    T_DO      shift, and go to state 14
+
+    Line        go to state 159
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Return      go to state 160
+    Definition  go to state 19
+
+
+State 141
+
+   32 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID . T_OPENBRACE Line Return T_CLOSEBRACE
+   38       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID . T_OPENBRACE Return T_CLOSEBRACE
+
+    T_OPENBRACE  shift, and go to state 161
+
+
+State 142
+
+   33 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_NONE . T_OPENBRACE Line T_CLOSEBRACE
+   39       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_NONE . T_OPENBRACE T_CLOSEBRACE
+
+    T_OPENBRACE  shift, and go to state 162
+
+
+State 143
+
+   31 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE . T_OPENBRACE Line Return T_CLOSEBRACE
+   37       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE . T_OPENBRACE Return T_CLOSEBRACE
+
+    T_OPENBRACE  shift, and go to state 163
+
+
+State 144
+
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+   83 Arguments_prime: Arguments_prime T_COMMA Expr .
+
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_EQUALS       shift, and go to state 69
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+
+    $default  reduce using rule 83 (Arguments_prime)
+
+
+State 145
+
+   80 MethodCall: T_ID T_DOT T_ID T_OPENPAREN T_CLOSEPAREN .
+
+    $default  reduce using rule 80 (MethodCall)
+
+
+State 146
+
+   81 MethodCall: T_ID T_DOT T_ID T_OPENPAREN Arguments . T_CLOSEPAREN
+
+    T_CLOSEPAREN  shift, and go to state 164
+
+
+State 147
+
+   70 Expr: T_NEW T_ID T_OPENPAREN T_NUMBER T_CLOSEPAREN .
+
+    $default  reduce using rule 70 (Expr)
+
+
+State 148
+
+   69 Expr: T_NEW T_ID T_OPENPAREN Arguments T_CLOSEPAREN .
+
+    $default  reduce using rule 69 (Expr)
+
+
+State 149
+
+   21 Else: T_OPENBRACE Line T_CLOSEBRACE .
+
+    $default  reduce using rule 21 (Else)
+
+
+State 150
+
+   12 If_Statement: If T_ELIF Else_If T_ELSE Else .
+
+    $default  reduce using rule 12 (If_Statement)
+
+
+State 151
+
+   20 Else_If: Else_If . T_ELIF Else_If
+   20        | Else_If T_ELIF Else_If .
+
+    T_ELIF  shift, and go to state 130
+
+    T_ELIF    [reduce using rule 20 (Else_If)]
+    $default  reduce using rule 20 (Else_If)
+
+
+State 152
+
+   10 Line: Line . Line
+   18 Else_If: Expr T_OPENBRACE Line . T_CLOSEBRACE
+
+    T_ID          shift, and go to state 9
+    T_PRINT       shift, and go to state 10
+    T_IF          shift, and go to state 11
+    T_WHILE       shift, and go to state 12
+    T_TYPE        shift, and go to state 13
+    T_DO          shift, and go to state 14
+    T_CLOSEBRACE  shift, and go to state 165
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 153
+
+   23 Do_While: T_OPENBRACE Line T_CLOSEBRACE T_WHILE Expr .
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_EQUALS       shift, and go to state 69
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+
+    $default  reduce using rule 23 (Do_While)
+
+
+State 154
+
+   43 Return: T_RETURN . Expr T_SEMICOLON
+
+    T_NUMBER     shift, and go to state 25
+    T_ID         shift, and go to state 26
+    T_MINUS      shift, and go to state 27
+    T_NEW        shift, and go to state 28
+    T_NOT        shift, and go to state 29
+    T_TRUE       shift, and go to state 30
+    T_FALSE      shift, and go to state 31
+    T_OPENPAREN  shift, and go to state 32
+
+    Expr        go to state 166
+    MethodCall  go to state 34
+
+
+State 155
+
+   10 Line: Line . Line
+   35 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line . Return T_CLOSEBRACE
+
+    T_ID      shift, and go to state 9
+    T_PRINT   shift, and go to state 10
+    T_RETURN  shift, and go to state 154
+    T_IF      shift, and go to state 11
+    T_WHILE   shift, and go to state 12
+    T_TYPE    shift, and go to state 13
+    T_DO      shift, and go to state 14
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Return      go to state 167
+    Definition  go to state 19
+
+
+State 156
+
+   41 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Return . T_CLOSEBRACE
+
+    T_CLOSEBRACE  shift, and go to state 168
+
+
+State 157
+
+   42 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE T_CLOSEBRACE .
+
+    $default  reduce using rule 42 (Lambda)
+
+
+State 158
+
+   10 Line: Line . Line
+   36 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE Line . T_CLOSEBRACE
+
+    T_ID          shift, and go to state 9
+    T_PRINT       shift, and go to state 10
+    T_IF          shift, and go to state 11
+    T_WHILE       shift, and go to state 12
+    T_TYPE        shift, and go to state 13
+    T_DO          shift, and go to state 14
+    T_CLOSEBRACE  shift, and go to state 169
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 159
+
+   10 Line: Line . Line
+   34 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line . Return T_CLOSEBRACE
+
+    T_ID      shift, and go to state 9
+    T_PRINT   shift, and go to state 10
+    T_RETURN  shift, and go to state 154
+    T_IF      shift, and go to state 11
+    T_WHILE   shift, and go to state 12
+    T_TYPE    shift, and go to state 13
+    T_DO      shift, and go to state 14
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Return      go to state 170
+    Definition  go to state 19
+
+
+State 160
+
+   40 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Return . T_CLOSEBRACE
+
+    T_CLOSEBRACE  shift, and go to state 171
+
+
+State 161
+
+   32 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE . Line Return T_CLOSEBRACE
+   38       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE . Return T_CLOSEBRACE
+
+    T_ID      shift, and go to state 9
+    T_PRINT   shift, and go to state 10
+    T_RETURN  shift, and go to state 154
+    T_IF      shift, and go to state 11
+    T_WHILE   shift, and go to state 12
+    T_TYPE    shift, and go to state 13
+    T_DO      shift, and go to state 14
+
+    Line        go to state 172
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Return      go to state 173
+    Definition  go to state 19
+
+
+State 162
+
+   33 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE . Line T_CLOSEBRACE
+   39       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE . T_CLOSEBRACE
+
+    T_ID          shift, and go to state 9
+    T_PRINT       shift, and go to state 10
+    T_IF          shift, and go to state 11
+    T_WHILE       shift, and go to state 12
+    T_TYPE        shift, and go to state 13
+    T_DO          shift, and go to state 14
+    T_CLOSEBRACE  shift, and go to state 174
+
+    Line        go to state 175
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 163
+
+   31 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE . Line Return T_CLOSEBRACE
+   37       | T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE . Return T_CLOSEBRACE
+
+    T_ID      shift, and go to state 9
+    T_PRINT   shift, and go to state 10
+    T_RETURN  shift, and go to state 154
+    T_IF      shift, and go to state 11
+    T_WHILE   shift, and go to state 12
+    T_TYPE    shift, and go to state 13
+    T_DO      shift, and go to state 14
+
+    Line        go to state 176
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Return      go to state 177
+    Definition  go to state 19
+
+
+State 164
+
+   81 MethodCall: T_ID T_DOT T_ID T_OPENPAREN Arguments T_CLOSEPAREN .
+
+    $default  reduce using rule 81 (MethodCall)
+
+
+State 165
+
+   18 Else_If: Expr T_OPENBRACE Line T_CLOSEBRACE .
+
+    $default  reduce using rule 18 (Else_If)
+
+
+State 166
+
+   43 Return: T_RETURN Expr . T_SEMICOLON
+   48 Expr: Expr . T_PLUS Expr
+   49     | Expr . T_MINUS Expr
+   50     | Expr . T_MULTIPLY Expr
+   51     | Expr . T_DIVIDE Expr
+   52     | Expr . T_LARGERTHAN Expr
+   53     | Expr . T_LARGEREQUAL Expr
+   54     | Expr . T_LESSTHAN Expr
+   55     | Expr . T_LESSEQUAL Expr
+   56     | Expr . T_EQUALS Expr
+   57     | Expr . T_AND Expr
+   58     | Expr . T_OR Expr
+
+    T_PLUS         shift, and go to state 61
+    T_MINUS        shift, and go to state 62
+    T_MULTIPLY     shift, and go to state 63
+    T_DIVIDE       shift, and go to state 64
+    T_LARGERTHAN   shift, and go to state 65
+    T_LARGEREQUAL  shift, and go to state 66
+    T_LESSTHAN     shift, and go to state 67
+    T_LESSEQUAL    shift, and go to state 68
+    T_EQUALS       shift, and go to state 69
+    T_AND          shift, and go to state 70
+    T_OR           shift, and go to state 71
+    T_SEMICOLON    shift, and go to state 178
+
+
+State 167
+
+   35 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line Return . T_CLOSEBRACE
+
+    T_CLOSEBRACE  shift, and go to state 179
+
+
+State 168
+
+   41 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Return T_CLOSEBRACE .
+
+    $default  reduce using rule 41 (Lambda)
+
+
+State 169
+
+   36 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE Line T_CLOSEBRACE .
+
+    $default  reduce using rule 36 (Lambda)
+
+
+State 170
+
+   34 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line Return . T_CLOSEBRACE
+
+    T_CLOSEBRACE  shift, and go to state 180
+
+
+State 171
+
+   40 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Return T_CLOSEBRACE .
+
+    $default  reduce using rule 40 (Lambda)
+
+
+State 172
+
+   10 Line: Line . Line
+   32 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line . Return T_CLOSEBRACE
+
+    T_ID      shift, and go to state 9
+    T_PRINT   shift, and go to state 10
+    T_RETURN  shift, and go to state 154
+    T_IF      shift, and go to state 11
+    T_WHILE   shift, and go to state 12
+    T_TYPE    shift, and go to state 13
+    T_DO      shift, and go to state 14
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Return      go to state 181
+    Definition  go to state 19
+
+
+State 173
+
+   38 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Return . T_CLOSEBRACE
+
+    T_CLOSEBRACE  shift, and go to state 182
+
+
+State 174
+
+   39 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE T_CLOSEBRACE .
+
+    $default  reduce using rule 39 (Lambda)
+
+
+State 175
+
+   10 Line: Line . Line
+   33 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE Line . T_CLOSEBRACE
+
+    T_ID          shift, and go to state 9
+    T_PRINT       shift, and go to state 10
+    T_IF          shift, and go to state 11
+    T_WHILE       shift, and go to state 12
+    T_TYPE        shift, and go to state 13
+    T_DO          shift, and go to state 14
+    T_CLOSEBRACE  shift, and go to state 183
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Definition  go to state 19
+
+
+State 176
+
+   10 Line: Line . Line
+   31 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line . Return T_CLOSEBRACE
+
+    T_ID      shift, and go to state 9
+    T_PRINT   shift, and go to state 10
+    T_RETURN  shift, and go to state 154
+    T_IF      shift, and go to state 11
+    T_WHILE   shift, and go to state 12
+    T_TYPE    shift, and go to state 13
+    T_DO      shift, and go to state 14
+
+    Line        go to state 45
+    Begin_Line  go to state 17
+    Lambda      go to state 18
+    Return      go to state 184
+    Definition  go to state 19
+
+
+State 177
+
+   37 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Return . T_CLOSEBRACE
+
+    T_CLOSEBRACE  shift, and go to state 185
+
+
+State 178
+
+   43 Return: T_RETURN Expr T_SEMICOLON .
+
+    $default  reduce using rule 43 (Return)
+
+
+State 179
+
+   35 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line Return T_CLOSEBRACE .
+
+    $default  reduce using rule 35 (Lambda)
+
+
+State 180
+
+   34 Lambda: T_ID T_OPENPAREN T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE .
+
+    $default  reduce using rule 34 (Lambda)
+
+
+State 181
+
+   32 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line Return . T_CLOSEBRACE
+
+    T_CLOSEBRACE  shift, and go to state 186
+
+
+State 182
+
+   38 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Return T_CLOSEBRACE .
+
+    $default  reduce using rule 38 (Lambda)
+
+
+State 183
+
+   33 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_NONE T_OPENBRACE Line T_CLOSEBRACE .
+
+    $default  reduce using rule 33 (Lambda)
+
+
+State 184
+
+   31 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line Return . T_CLOSEBRACE
+
+    T_CLOSEBRACE  shift, and go to state 187
+
+
+State 185
+
+   37 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Return T_CLOSEBRACE .
+
+    $default  reduce using rule 37 (Lambda)
+
+
+State 186
+
+   32 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_ID T_OPENBRACE Line Return T_CLOSEBRACE .
+
+    $default  reduce using rule 32 (Lambda)
+
+
+State 187
+
+   31 Lambda: T_ID T_OPENPAREN Parameters T_CLOSEPAREN T_ARROW T_TYPE T_OPENBRACE Line Return T_CLOSEBRACE .
+
+    $default  reduce using rule 31 (Lambda)
